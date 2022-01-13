@@ -14,9 +14,9 @@ from django.core.mail import send_mail
 # Create your views here.
 
 def send_otp(mobile , otp):
-    account_sid = ""
+    account_sid = "ACf181ce43939a9fea5a6501d387ed9242"
 # Your Auth Token from twilio.com/console
-    auth_token  = ""
+    auth_token  = "32ed1890321fca191b8cfecf40f40d84"
 
     client = Client(account_sid, auth_token)    
 
