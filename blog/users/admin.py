@@ -2,4 +2,7 @@ from django.contrib import admin
 from .models import profileModel
 # Register your models here.
 
-admin.site.register(profileModel)
+@admin.register(profileModel)
+class profileModelAdmin(admin.ModelAdmin):
+    list_display = ('id','user','mobile','otp')
+
