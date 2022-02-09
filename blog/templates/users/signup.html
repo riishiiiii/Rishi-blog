@@ -11,6 +11,9 @@
                 <div class="card my-3 shadow">
                     <div class="card-body">
                         <h4>Sign Up Page</h4>
+                        {% if message %}
+                        <div class="alert alert-{{class}}">{{message}}</div>
+                        {% endif %}
                         <hr>
                         <form method="POST">
                             {% csrf_token %}
