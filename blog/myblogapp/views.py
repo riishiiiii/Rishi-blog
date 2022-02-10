@@ -83,8 +83,9 @@ def social_share(request,pk):
     }
     return render(request,'social.html', context)
 
-def myblogs(request,pk):
-    user = User.objects.get(id=pk)
+def myblogs(request):
+    email = request.session['email']
+    user = User.objects.get(email=email)
     posts = PostModel.objects.filter(author=user)
     context =  {
         'posts':posts

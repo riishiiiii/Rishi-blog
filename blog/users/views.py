@@ -149,7 +149,7 @@ def resend_otp(request):
     user = User.objects.filter(email = email).first()
     profile = profileModel.objects.filter(user = user).first() 
     if user is None:
-        context = {'message' : 'User not found' , 'class' : 'danger' }
+        context = {'message' : 'User not found' , 'class' : 'danger' }  
         return render(request,'users/login.html' , context)         
     otp = str(random.randint(1000 , 9999))
     profile.otp = otp
