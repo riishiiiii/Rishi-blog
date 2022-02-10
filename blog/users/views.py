@@ -79,7 +79,7 @@ def register(request):
             user = User(username = username, email = email)
             user.save()
             otp = str(random.randint(1000 , 9999))
-            profile = profileModel(user = user , mobile = mobile, otp=otp,exp_time=timezone.now() + datetime.timedelta(seconds=600))
+            profile = profileModel(user = user , mobile = mobile, otp=otp,exp_time=timezone.now() + datetime.timedelta(seconds=60))
             profile.save()
             request.session['mobile'] = mobile
             return redirect('user-login')
@@ -101,14 +101,14 @@ def login_attempt(request):
             return render(request,'users/login.html' , context)         
         otp = str(random.randint(1000 , 9999))
         profile.otp = otp
-        profile.exp_time=timezone.now() + datetime.timedelta(seconds=300)
+        profile.exp_time=timezone.now() + datetime.timedelta(seconds=60)
         profile.save()
         # send_otp(mobile , otp)
         send_mail(
-            'your otp',
-        f'Here is your otp: {otp}.',
-            'rishu9510@gmail.com',
-            [email],
+            subject= 'YOUR OTP',
+           message= f'Here is your otp: {otp}. This will expire in 5 minutes',
+           from_email=  'rishu9510@gmail.com',
+           recipient_list = [email],
                 fail_silently=False,
                                     )
         # request.session['mobile'] = mobile
@@ -133,10 +133,13 @@ def login_otp(request):
             login(request , user)
             
             return redirect('blog-index')
+        if otp != profile.otp:
+            context = {'message' : 'Wrong OTP' , 'class' : 'danger','mobile':email}
+            return render(request,'users/login_otp.html' , context)  
         else:
             profile.otp = None
             profile.save()
-            context = {'message' : 'Wrong/expired OTP' , 'class' : 'danger','mobile':email}
+            context = {'message' : 'expired OTP' , 'class' : 'danger','mobile':email}
             return render(request,'users/login_otp.html' , context)
     
     return render(request,'users/login_otp.html' , context)

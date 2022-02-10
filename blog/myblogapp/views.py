@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from .models import PostModel
 from .forms import PostModelForm, PostUpdateForm ,CommentForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required
@@ -81,3 +82,12 @@ def social_share(request,pk):
         'post':post
     }
     return render(request,'social.html', context)
+
+def myblogs(request,pk):
+    user = User.objects.get(id=pk)
+    posts = PostModel.objects.filter(author=user)
+    context =  {
+        'posts':posts
+    }
+    return render(request,'blog/myblogs.html', context)
+
