@@ -125,13 +125,14 @@ def login_otp(request):
         user = User.objects.filter(email=email).first()
         profile = profileModel.objects.filter(user = user).first()
         # profile = User.objects.filter(email=email).first()
-        print(profile.exp_time + datetime.timedelta(minutes=1))
-        print(timezone.now())   
+        if otp == '':
+            context = {'message' : 'Enter valid OTP' , 'class' : 'danger','mobile':email}
+            return render(request,'users/login_otp.html' , context)
         if otp == profile.otp and profile.exp_time > timezone.now():
-
             user = User.objects.get(id = profile.user.id)
             login(request , user)
-            
+            profile.otp = None
+            profile.save()
             return redirect('blog-index')
         if otp != profile.otp:
             context = {'message' : 'Wrong OTP' , 'class' : 'danger','mobile':email}
