@@ -1,8 +1,9 @@
-from django.contrib import admin    
+from django.contrib import admin
 from .models import profileModel
+
 # Register your models here.
+
 
 @admin.register(profileModel)
 class profileModelAdmin(admin.ModelAdmin):
-    list_display = ('id','user','mobile','otp')
-
+    list_display = ("id", "user", "mobile", "otp")

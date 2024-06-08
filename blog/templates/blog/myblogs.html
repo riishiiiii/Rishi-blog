@@ -1,6 +1,5 @@
 {% extends 'partials/base.html' %} {% block title %}my blogs{% endblock %} {%
-load crispy_forms_tags %} {% block content %}
-{% if posts %}
+load crispy_forms_tags %} {% block content %} {% if posts %}
 <div class="container">
   <div class="row mt-5 pt-4">
     <div class="col-md-8">
@@ -25,18 +24,17 @@ load crispy_forms_tags %} {% block content %}
             </div>
           </div>
         </div>
-      </div>      
+      </div>
       {% endfor %}
     </div>
   </div>
 </div>
 {% else %}
 <div class="container">
-    <div class="row mt-5 pt-4">
-      <div class="col-md-8">
-        <h1>No Posts</h1>
-      </div>
+  <div class="row mt-5 pt-4">
+    <div class="col-md-8">
+      <h1>No Posts</h1>
     </div>
+  </div>
 </div>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}
